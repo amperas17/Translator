@@ -2,26 +2,18 @@ package vavan.com.rus_eng_translator;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.Scanner;
 
@@ -76,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
 
         private String getOutputFromUrl(String text) throws IOException {
 
-            String output;
+            String translated;
 
             URL urlObj = new URL(yaUrl+apiKey);
             HttpsURLConnection connection = (HttpsURLConnection)urlObj.openConnection();
@@ -87,9 +79,15 @@ public class MainActivity extends AppCompatActivity {
             dataOutputStream.writeBytes("&text=" + URLEncoder.encode(text,"UTF-8") +"&lang=ru-en");
 
             InputStream response = connection.getInputStream();
-            output = new Scanner(response).nextLine();
+            String jsonString = new Scanner(response).nextLine();
 
-            return output;
+            int start = jsonString.indexOf("[");
+            int end = jsonString.indexOf("]");
+            translated = jsonString.substring(start + 2, end - 1);
+
+            connection.disconnect();
+
+            return translated;
         }
 
 
