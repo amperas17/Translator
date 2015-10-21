@@ -49,6 +49,9 @@ public class MainActivity extends AppCompatActivity {
     String[] langShortArray = {"en","ar","el","it","es","zh","ko","de","no","fa",
                             "pl","pt","ro","ru","uk","fr","sv","ja"};
 
+    String strLangFrom = "ru";
+    String strLangTo = "en";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
         spLangFrom.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                tvOutput.setText(langShortArray[position]);
+                strLangFrom = langShortArray[position];
             }
 
             @Override
@@ -100,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
         spLangTo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                tvOutput.setText(langShortArray[position]);
+                strLangTo = langShortArray[position];
             }
 
             @Override
@@ -131,6 +134,7 @@ public class MainActivity extends AppCompatActivity {
 
         private String getOutputFromUrl(String text) throws IOException {
 
+            /*Work with yandex.translate api through the network */
             String translated;
 
             URL urlObj = new URL(yaUrl+apiKey);
@@ -139,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
             connection.setDoOutput(true);
 
             DataOutputStream dataOutputStream = new DataOutputStream(connection.getOutputStream());
-            dataOutputStream.writeBytes("&text=" + URLEncoder.encode(text,"UTF-8") +"&lang=ru-en");
+            dataOutputStream.writeBytes("&text=" + URLEncoder.encode(text,"UTF-8") + "&lang=" + strLangFrom + '-' + strLangTo);
 
             InputStream response = connection.getInputStream();
             String jsonString = new Scanner(response).nextLine();
@@ -157,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String output) {
 
-            tvOutput.setText(output);
+            tvOutput.setText(output+"\n\n"+copyrightComment);
         }
     }
 
