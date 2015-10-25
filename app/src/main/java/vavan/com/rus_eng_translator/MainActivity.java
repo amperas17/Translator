@@ -5,173 +5,90 @@ package vavan.com.rus_eng_translator;
 *
  */
 
-import android.content.Context;
-import android.os.AsyncTask;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.TextView;
-
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.util.Scanner;
-
-import javax.net.ssl.HttpsURLConnection;
+import android.widget.FrameLayout;
 
 
 public class MainActivity extends AppCompatActivity {
 
-    static final String API_KEY = "trnsl.1.1.20151008T152506Z.60a06849d2e0dee1.7ef601ab547048e195ab433d3fe1ab7612f5dda7";
-    static final String YA_URL = "https://translate.yandex.net/api/v1.5/tr.json/translate?key=";
+    final static String TAG_TRANSLATE = "TAG_TRANS";
+    final static String TAG_HISTORY = "TAG_HIST";
 
-    static final String COPYRIGHT_COMMENT = "Переведено сервисом «Яндекс.Переводчик» http://translate.yandex.ru/";
+    FrameLayout container;
+    FragmentManager myFragmentManager;
+    TranslateFragment translateFragment;
+    HistoryFragment historyFragment;
 
-    static final String[] LANG_ARRAY = {"sq","en","ar","hy","az","af","eu","be","bg","bs","cy","vi","hu","gl","nl",
-                        "el","ka","da","he","ga","it","is","es","kk","ca","ky","zh","ko","la","lv",
-                        "lt","mg","ms","mt","mk","mn","de","no","fa","pl","pt","ro","ru","sr","sk",
-                        "sl","sw","tg","th","tl","tt","tr","uz","uk","fi","fr","hr","cs","sv","et","ja"};
-
-    static final String[] LANG_SHORT_ARRAY = {"en","ar","el","it","es","zh","ko","de","no","fa",
-                            "pl","pt","ro","ru","uk","fr","sv","ja"};
-
-
-    EditText etInput;
-    Button btTranslate;
-    TextView tvOutput;
-    Spinner spLangFrom, spLangTo;
-
-
-    String strLangFrom = "ru";
-    String strLangTo = "en";
-
+    Button btTransFragment,btHistoryFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        etInput = (EditText)findViewById(R.id.etInput);
-        btTranslate = (Button)findViewById(R.id.btTranslate);
-        tvOutput = (TextView)findViewById(R.id.tvOutput);
+        container = (FrameLayout)findViewById(R.id.container);
+        myFragmentManager = getFragmentManager();
+        translateFragment = new TranslateFragment();
+        historyFragment = new HistoryFragment();
 
-        btTranslate.setOnClickListener(new View.OnClickListener() {
+        btTransFragment = (Button)findViewById(R.id.btTransFragment);
+        btHistoryFragment = (Button)findViewById(R.id.btHistoryFragment);
+
+        btTransFragment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BKTask task = new BKTask();
-                task.execute(new String[]{String.valueOf(etInput.getText())});
 
-                //To hide the keyboard after typing
-                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(etInput.getWindowToken(), 0);
-            }
-        });
+                TranslateFragment fragment = (TranslateFragment)myFragmentManager
+                        .findFragmentByTag(TAG_TRANSLATE);
 
-
-
-        ArrayAdapter<String> adapterSpinnerTo = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, LANG_SHORT_ARRAY);
-        adapterSpinnerTo.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        spLangTo = (Spinner)findViewById(R.id.spLangTo);
-        spLangTo.setAdapter(adapterSpinnerTo);
-        spLangTo.setPrompt("Title");
-        spLangTo.setSelection(0);
-        spLangTo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                strLangTo = LANG_SHORT_ARRAY[position];
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-        ArrayAdapter<String> adapterSpinnerFrom = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, LANG_SHORT_ARRAY);
-        adapterSpinnerFrom.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        spLangFrom = (Spinner)findViewById(R.id.spLangFrom);
-        spLangFrom.setAdapter(adapterSpinnerFrom);
-        spLangFrom.setPrompt("Title");
-        spLangFrom.setSelection(13);
-        spLangFrom.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                strLangFrom = LANG_SHORT_ARRAY[position];
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-    }
-
-
-    private class BKTask extends AsyncTask<String,Void,String>{
-
-        /*Work with yandex.translate api through the network */
-
-        @Override
-        protected String doInBackground(String... translatingTextArray) {
-            String output = null;
-            for (String text : translatingTextArray) {
-                try {
-                    output = getOutputFromUrl(text);
-                } catch (IOException e) {
-                    e.printStackTrace();
+                if (fragment == null){
+                    //Bundle bundle = new Bundle();
+                    FragmentTransaction fragmentTransaction = myFragmentManager
+                            .beginTransaction();
+                    fragmentTransaction.replace(R.id.container,translateFragment,TAG_TRANSLATE);
+                    fragmentTransaction.commit();
                 }
             }
-            return output;
+        });
+
+        btHistoryFragment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                HistoryFragment fragment = (HistoryFragment)myFragmentManager
+                        .findFragmentByTag(TAG_HISTORY);
+
+                if (fragment == null){
+                    //Bundle bundle = new Bundle();
+                    FragmentTransaction fragmentTransaction = myFragmentManager
+                            .beginTransaction();
+                    fragmentTransaction.replace(R.id.container,historyFragment,TAG_HISTORY);
+                    fragmentTransaction.commit();
+                }
+            }
+        });
+
+
+
+
+        if (savedInstanceState == null){
+            // при первом запуске программы
+            FragmentTransaction fragmentTransaction = myFragmentManager.beginTransaction();
+
+            // добавляем в контейнер при помощи метода add()
+            fragmentTransaction.add(R.id.container, translateFragment, TAG_TRANSLATE);
+            fragmentTransaction.commit();
         }
 
-        private String getOutputFromUrl(String text) throws IOException {
 
-            /*Work with yandex.translate api through the network */
-            String translated;
-
-            URL urlObj = new URL(YA_URL + API_KEY);
-            HttpsURLConnection connection = (HttpsURLConnection)urlObj.openConnection();
-            connection.setRequestMethod("POST");
-            connection.setDoOutput(true);
-
-            DataOutputStream dataOutputStream = new DataOutputStream(connection.getOutputStream());
-            dataOutputStream.writeBytes("&text=" + URLEncoder.encode(text,"UTF-8") + "&lang=" + strLangFrom + '-' + strLangTo);
-
-            InputStream response = connection.getInputStream();
-            String jsonString = new Scanner(response).nextLine();
-
-            int start = jsonString.indexOf("[");
-            int end = jsonString.indexOf("]");
-            translated = jsonString.substring(start + 2, end - 1);
-
-            connection.disconnect();
-
-            return translated;
-        }
-
-
-        @Override
-        protected void onPostExecute(String output) {
-
-            tvOutput.setText(output+"\n"+ COPYRIGHT_COMMENT);
-        }
-
-        @Override
-        protected void onPreExecute() {
-            tvOutput.setText("Идёт подключение к интернету...");
-
-        }
     }
+
+
+
 
 }
