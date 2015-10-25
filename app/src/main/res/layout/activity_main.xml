@@ -9,40 +9,21 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".MainActivity"
     android:orientation="vertical"
+    android:background="#F0F8FF"
     >
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        <android.support.v4.view.ViewPager
+            android:id="@+id/vpContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </android.support.v4.view.ViewPager>
 
-        <Button
-            android:id="@+id/btTransFragment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Перевод"
-            android:layout_weight="1"
-            />
-        <Button
-            android:id="@+id/btHistoryFragment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="История"
-            android:layout_weight="1"
-            />
-
-    </LinearLayout>
-
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
+        <!--
         <FrameLayout
             android:id="@+id/container"
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
         </FrameLayout>
+        -->
 
-    </ScrollView>
 </LinearLayout>

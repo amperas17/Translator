@@ -6,108 +6,145 @@ android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:orientation="vertical">
 
-<TextView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="3dp"
-    android:textSize="24sp"
-    android:text="Выберите языки"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:layout_weight="1"
-    android:baselineAligned="false">
-
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_weight="5"
-        >
-
-        <Spinner
-            android:id="@+id/spLangFrom"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
             >
-        </Spinner>
 
-    </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:textSize="24sp"
+                android:text="Выберите языки:"/>
 
-    <TextView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="3dp"
-        android:textSize="24sp"
-        android:text="-->"
-        android:layout_weight="2"
-        android:gravity="center_horizontal"
-        />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:baselineAligned="false">
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_weight="5"
-        >
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="5"
+                    android:layout_gravity="center_vertical"
+                    >
 
-        <Spinner
-            android:id="@+id/spLangTo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
-        </Spinner>
+                    <Spinner
+                        android:id="@+id/spLangFrom"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/my_border"
+                        android:layout_marginLeft="5dp"
 
-    </LinearLayout>
+                        >
+                    </Spinner>
 
-</LinearLayout>
+                </LinearLayout>
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:layout_weight="50"
-    >
+                <TextView
+                    android:id="@+id/tvChangeLangs"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="24sp"
+                    android:text="&lt;-->"
+                    android:layout_weight="2"
+                    android:gravity="center"
+                    android:background="@drawable/my_border"
+                    android:layout_margin="7dp"
+                    android:paddingTop="-5dp"
+                    />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="3dp"
-        android:textSize="24sp"
-        android:text="Введите фразу для перевода:"
-        />
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_weight="5"
+                    android:layout_gravity="center_vertical"
+                    >
 
-    <EditText
-        android:id="@+id/etInput"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="3dp"
-        android:textSize="24sp"
-        />
+                    <Spinner
+                        android:id="@+id/spLangTo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/my_border"
+                        android:layout_marginRight="5dp"
+                        >
+                    </Spinner>
 
-    <Button
-        android:id="@+id/btTranslate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Перевести"
-        android:layout_margin="3dp"
-        android:padding="20dp"
-        android:textSize="22sp"
-        android:layout_gravity="center" />
+                </LinearLayout>
 
-    <TextView
-        android:id="@+id/tvOutput"
-        android:text="Здесь будет перевод..."
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="3dp"
-        android:textSize="24sp"
-        />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3dp"
+                    android:textSize="24sp"
+                    android:text="Введите фразу для перевода:"
+                    />
+
+                <EditText
+                    android:id="@+id/etInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3dp"
+                    android:textSize="24sp"
+                    android:background="@drawable/my_border"
+                    android:padding="10dp"
+                    />
+
+                <Button
+                    android:id="@+id/btTranslate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Перевести"
+                    android:layout_margin="7dp"
+                    android:padding="12dp"
+                    android:textSize="22sp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/my_border"
+                    />
+
+                <TextView
+                    android:id="@+id/tvOutput"
+                    android:text="Здесь будет перевод..."
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_margin="3dp"
+                    android:textSize="24sp"
+                    android:background="@drawable/my_border"
+                    android:padding="10dp"
 
 
-</LinearLayout>
+                    />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textSize="24sp"
+                    android:text="Переведено сервисом «Яндекс.Переводчик»\nhttp://translate.yandex.ru/"/>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>
 

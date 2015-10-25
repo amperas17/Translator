@@ -4,7 +4,7 @@ package vavan.com.rus_eng_translator;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,14 +42,21 @@ public class TranslateFragment extends Fragment {
             "sl","sw","tg","th","tl","tt","tr","uz","uk","fi","fr","hr","cs","sv","et","ja"};
 
     static final String[] LANG_SHORT_ARRAY = {"en","ar","el","it","es","zh","ko","de","no","fa",
-            "pl","pt","ro","ru","uk","fr","sv","ja"};
+            "pl","pt","uk","ru","fr","sv","ja"};
+
+    static final String[] LANG_SHORT_ARRAY_FULL = {"english","arabian","hellenic","italian","spanish",
+            "chinese","korean","german","norwegian","persian",
+            "polish","portuguese","ukrainian","russian","french",
+            "swedish","japanese"};
+
+    static final int START_LANG_FROM = 13;
+    static final int START_LANG_TO = 0;
 
 
     EditText etInput;
     Button btTranslate;
-    TextView tvOutput;
+    TextView tvOutput,tvChangeLangs;
     Spinner spLangFrom, spLangTo;
-
 
     String strLangFrom = "ru";
     String strLangTo = "en";
@@ -76,14 +83,13 @@ public class TranslateFragment extends Fragment {
         });
 
 
-
-        ArrayAdapter<String> adapterSpinnerTo = new ArrayAdapter<>(this.getActivity(), android.R.layout.simple_spinner_item, LANG_SHORT_ARRAY);
+        ArrayAdapter<String> adapterSpinnerTo = new ArrayAdapter<>(this.getActivity(),
+                android.R.layout.simple_spinner_item, LANG_SHORT_ARRAY_FULL);
         adapterSpinnerTo.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spLangTo = (Spinner)view.findViewById(R.id.spLangTo);
         spLangTo.setAdapter(adapterSpinnerTo);
-        spLangTo.setPrompt("Title");
-        spLangTo.setSelection(0);
+        spLangTo.setSelection(START_LANG_TO);
         spLangTo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -96,13 +102,13 @@ public class TranslateFragment extends Fragment {
             }
         });
 
-        ArrayAdapter<String> adapterSpinnerFrom = new ArrayAdapter<>(this.getActivity(), android.R.layout.simple_spinner_item, LANG_SHORT_ARRAY);
+        ArrayAdapter<String> adapterSpinnerFrom = new ArrayAdapter<>(this.getActivity(),
+                android.R.layout.simple_spinner_item, LANG_SHORT_ARRAY_FULL);
         adapterSpinnerFrom.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spLangFrom = (Spinner)view.findViewById(R.id.spLangFrom);
         spLangFrom.setAdapter(adapterSpinnerFrom);
-        spLangFrom.setPrompt("Title");
-        spLangFrom.setSelection(13);
+        spLangFrom.setSelection(START_LANG_FROM);
         spLangFrom.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -115,6 +121,16 @@ public class TranslateFragment extends Fragment {
             }
         });
 
+        tvChangeLangs = (TextView)view.findViewById(R.id.tvChangeLangs);
+        tvChangeLangs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                int temp = spLangFrom.getSelectedItemPosition();
+                spLangFrom.setSelection(spLangTo.getSelectedItemPosition());
+                spLangTo.setSelection(temp);
+            }
+        });
 
         return view;
     }
@@ -162,11 +178,10 @@ public class TranslateFragment extends Fragment {
             return translated;
         }
 
-
         @Override
         protected void onPostExecute(String output) {
 
-            tvOutput.setText(output+"\n"+ COPYRIGHT_COMMENT);
+            tvOutput.setText(output);
         }
 
         @Override
@@ -175,4 +190,5 @@ public class TranslateFragment extends Fragment {
 
         }
     }
+
 }
