@@ -11,15 +11,33 @@
         android:layout_height="wrap_content"
         android:text="История запросов:"
         android:layout_marginBottom="10dp"
+        android:layout_margin="7dp"
         android:textSize="24sp"
+        android:gravity="center"
+        android:textAlignment="gravity"
         />
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/tvHistory"
-        android:text="история пуста. Сделайте запрос!"
+        android:text="История пуста. Сделайте запрос!"
+        android:layout_margin="7dp"
         android:textSize="24sp"
+        android:gravity="center"
+        android:textAlignment="gravity"
+        />
+
+    <Button
+        android:id="@+id/btGetHistory"
+        android:text="Обновить"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="7dp"
+        android:padding="12dp"
+        android:textSize="22sp"
+        android:layout_gravity="center"
+        android:background="@drawable/my_border"
         />
 
 </LinearLayout>

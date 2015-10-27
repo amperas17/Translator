@@ -1,7 +1,9 @@
 package vavan.com.rus_eng_translator;
 
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -182,6 +184,10 @@ public class TranslateFragment extends Fragment {
         protected void onPostExecute(String output) {
 
             tvOutput.setText(output);
+
+            DBHelper dbHelper = new DBHelper(getActivity());
+            dbHelper.addRecord(etInput.getText().toString(),output);
+
         }
 
         @Override
