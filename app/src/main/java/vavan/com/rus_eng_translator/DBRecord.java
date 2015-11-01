@@ -1,7 +1,7 @@
 package vavan.com.rus_eng_translator;
 
 /**
- * Created by Вова on 27.10.2015.
+ * Class help in working with database, it`s object has to strings: initial and translated
  */
 public class DBRecord {
 

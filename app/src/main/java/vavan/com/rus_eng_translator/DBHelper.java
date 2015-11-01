@@ -1,5 +1,10 @@
 package vavan.com.rus_eng_translator;
 
+/**
+*   Class provide several methods for work with database
+*
+ */
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -72,35 +77,6 @@ class DBHelper extends SQLiteOpenHelper {
         }
         return recordList;
     }
-
-    /*public void addRecord(DBRecord record){
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues cv = new ContentValues();
-        cv.put(AppData.COLUMN_TEXT_FROM,record.getLangFrom());
-        cv.put(AppData.COLUMN_TEXT_TO,record.getLangTo());
-        db.insert(AppData.TABLE_NAME,null,cv);
-        db.close();
-    }*/
-
-    /*public DBRecord getRecord(int id){
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(AppData.TABLE_NAME,new String[]{AppData.COLUMN_ID,
-                        AppData.COLUMN_TEXT_FROM,AppData.COLUMN_TEXT_TO},
-                AppData.COLUMN_ID + "=?", new String[]{String.valueOf(id)},
-                null,null,null);
-        if (cursor != null){
-            cursor.moveToFirst();
-        }
-        DBRecord record = new DBRecord(Integer.parseInt(cursor.getString(0)),
-                cursor.getString(1),cursor.getString(2));
-        return record;
-    }*/
-
-    /*public int deleteRecord(DBRecord record){
-        SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete(AppData.TABLE_NAME,AppData.COLUMN_ID + "=?",new String[]
-                {String.valueOf(record.getId())});
-    }*/
 
 
 }

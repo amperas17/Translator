@@ -2,7 +2,7 @@ package vavan.com.rus_eng_translator;
 
 /*
 *   Application provide translating service for many languages using Yandex.translate api.
-*
+*   There are two fragments, that are shown with the help of ViewPager
  */
 
 import android.support.v4.app.FragmentManager;
@@ -21,15 +21,6 @@ import java.util.List;
 
 public class MainActivity extends FragmentActivity {
 
-    /*final static String TAG_TRANSLATE = "TAG_TRANS";
-    final static String TAG_HISTORY = "TAG_HIST";
-
-    FrameLayout container;
-    FragmentManager myFragmentManager;
-    TranslateFragment translateFragment;
-    HistoryFragment historyFragment;
-
-    Button btTransFragment,btHistoryFragment;*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,11 +29,11 @@ public class MainActivity extends FragmentActivity {
 
         ViewPager pager = (ViewPager)findViewById(R.id.vpContainer);
 
-        List<Fragment> fragments = new ArrayList<>();
+        final List<Fragment> fragments = new ArrayList<>();
         fragments.add(Fragment.instantiate(this, TranslateFragment.class.getName()));
         fragments.add(Fragment.instantiate(this, HistoryFragment.class.getName()));
 
-        pager.setAdapter(new PagerAdapter(getSupportFragmentManager(),fragments));
+        pager.setAdapter(new PagerAdapter(getSupportFragmentManager(), fragments));
         pager.setCurrentItem(0);
 
 

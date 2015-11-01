@@ -28,7 +28,8 @@ import java.util.Scanner;
 import javax.net.ssl.HttpsURLConnection;
 
 /**
- * A simple {@link Fragment} subclass.
+ *form request and send it to Yandex in AsyncTask thread, then it get response, show it in textview
+ * and add to history database.
  */
 public class TranslateFragment extends Fragment {
 

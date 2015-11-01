@@ -1,7 +1,7 @@
 package vavan.com.rus_eng_translator;
 
 /**
- * Created by Вова on 27.10.2015.
+ * Class contains constants for working with database.
  */
 public class AppData {
     public final static int DATABASE_VERSION = 1;
